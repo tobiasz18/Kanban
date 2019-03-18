@@ -27,3 +27,11 @@ export function getLanes(req, res) {
   }
 }
 
+export function deleteLane(req, res) {
+  try {
+    Lane.deleteOne({id: req.params.id}).exec()
+    .then(laneDeleted => res.json(laneDeleted))
+  } catch (err) {
+    res.status(500).send(err)
+  }
+}
