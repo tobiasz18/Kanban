@@ -35,3 +35,12 @@ export function deleteLane(req, res) {
     res.status(500).send(err)
   }
 }
+
+export function updateLane(req, res) {
+  try {
+    Lane.updateOne({id: req.params.id}, req.body).exec()
+      .then(updateLane => res.json(updateLane))
+  } catch (err) {
+    res.status(500).send(err)
+  }
+}
