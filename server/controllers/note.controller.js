@@ -1,4 +1,6 @@
 import Note from '../models/note';
+import Lane from '../models/lane';
+import uuid from 'uuid/v4';
 
 export function addNote(req, res) {
   if (!req.body.name) {
@@ -7,7 +9,21 @@ export function addNote(req, res) {
 
   const newNote = new Note(req.body)
 
-  newNote.id = '1234'
+  newNote.id = uuid();
+  newNote.save((err, saved) => {
+    if(err) {
+      res.status(500).send(err);
+    }
 
-  newNote.save().then((res) => res.json({ note: saved }));
+    Lane.findOne({id: req.params.laneId})
+    .then(lane => {
+      lane.notes.push(saved)
+      return lane.save()
+    })
+    .then(() => {
+      res.json(saved)
+    })
+  })   
 }
+
+
