@@ -1,5 +1,6 @@
 import Lane from '../models/lane';
 import uuid from 'uuid/v4';
+import Note from '../models/note'
 
 export function addLane(req, res) {
   if (!req.body.name) {
@@ -28,9 +29,18 @@ export function getLanes(req, res) {
 }
 
 export function deleteLane(req, res) {
-  try {
-    Lane.deleteOne({id: req.params.id}).exec()
-    .then(laneDeleted => res.json(laneDeleted))
+  try { // find and delete chosen notes from data base which are related with lane to deleted
+    Lane.findOne({id: req.params.id}).exec().then(lanes => {
+      lanes.notes.forEach(note => { 
+        Note.findOne({_id: note}).exec().then(note => note.remove())
+      });
+    });
+    // delete selected lane with pushed notes but not notes with db
+    Lane.deleteOne({id: req.params.id})
+    .then(laneDeleted => {
+      res.json(laneDeleted)
+    })
+
   } catch (err) {
     res.status(500).send(err)
   }

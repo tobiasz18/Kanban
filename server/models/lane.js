@@ -9,8 +9,9 @@ const laneSchema = new Schema({
   usePushEach: true
 });
 
-laneSchema.pre('find', function() {
+laneSchema.pre('find', function(next) {
   this.populate('notes');
+  next();
 });
 
 export default mongoose.model('Lane', laneSchema);
