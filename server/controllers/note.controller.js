@@ -26,5 +26,20 @@ export function addNote(req, res) {
   })   
 }
 
+export function deleteNote(req, res) {
+  try {
+    Note.deleteOne({id: req.params.id}).exec()
+      .then(note => res.json(note))
+  } catch (err) {
+    res.status(500).send(err)
+  }
+}
 
-
+export function updateNote(req, res) {
+  try {
+    Note.updateOne({id: req.params.id}, req.body).exec()
+      .then(note => res.json(note))
+  } catch (err) {
+    res.send(500).send(err)
+  }
+}
