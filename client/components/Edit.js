@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 export default class Edit extends Component {
   render() {
@@ -53,9 +54,8 @@ export default class Edit extends Component {
 
 Edit.propTypes = {
   value: PropTypes.string,
-  onEdit: propTypes.func,
+  onEdit: PropTypes.func,
   onValueClick: PropTypes.func,
   editing: PropTypes.bool
 };
 
-export default Edit;
