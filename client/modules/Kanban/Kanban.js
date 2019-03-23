@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Lanes from '../Lane/Lanes';
-import styles from '../Lane/Lane.css';
+import styles from './Kanban.css';
 
 import { createLane } from '../Lane/LaneActions';
 
