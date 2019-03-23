@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 
 // Import Style
 import styles from './Lane.css';
-
+import Edit from '../../components/Edit';
 class Lane extends Component {
   render() {
     const { lane, laneNotes, ...props } = this.props;
@@ -17,7 +17,12 @@ class Lane extends Component {
           <div>
             <button onClick={props.addNote.bind(this. laneId)}>+</button>
           </div>
-          <h4>{lane.name}</h4>
+          <Edit 
+            className={styles.LaneName}
+            editing={lane.editing}
+            value={lane.name}
+            onEdit={name => props.updateLane({id: laneId, name, editing: false})}
+          />
           <div className={styleMedia.LaneDelete}>
             <button onClick={this.props.LaneDelete.bind(this, lane)}>x</button>
           </div>
