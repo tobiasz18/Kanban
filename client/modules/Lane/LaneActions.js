@@ -1,4 +1,5 @@
 import uuid from 'uuid';
+import callApi from '../../util/apiCaller';
 
 // Export Constants
 export const CREATE_LANE = 'CREATE_LANE';
@@ -10,20 +11,45 @@ export const CREATE_LANES = 'CREATE_LANES';
 export function createLane(lane) {
     return {
         type: CREATE_LANE,
-        lane: {
-            id: uuid.v4(),
-            notes: lane.notes || [],
-            ...lane
-        }
+        lane
     };
 };
+
+export function createLaneRequest(lane) {
+  return (dispatch) => {
+    return callApi('lanes', 'post', lane)
+      .then(res => dispatch(createLane(res.lane)));
+  };
+}
+
+export function createLanes(lanes) {
+  return {
+      type: CREATE_LANES,
+      lanes
+  }
+}
+
+export function fetchLanes() {
+  return (dispatch) => {
+    return callApi('lanes').then(res => {
+      dispatch(createLanes(res.lanes))
+    })
+  }
+}
 
 export function updateLane(updatedLane) {
     return {
         type: UPDATE_LANE,
-        ...updatedLane
+        updatedLane
     };
 };
+
+export function updateLaneRequest(updatedLane) {
+  return (dispatch) => {
+    return callApi(`lanes/${updatedLane.id}`, 'put', updatedLane)
+      .then(res => dispatch(updateLane(res.lane)))
+  }
+}
 
 export function deleteLane(id) {
     return {
@@ -32,9 +58,4 @@ export function deleteLane(id) {
     }
 }
 
-export function createLanes(lanes) {
-    return {
-        type: CREATE_LANES,
-        lanes
-    }
-}
+

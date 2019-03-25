@@ -11,6 +11,7 @@ export function addLane(req, res) {
 
   newLane.notes = [];
   newLane.id = uuid();
+  newLane.editing = false;
 
   newLane.save((err, saved) => {
     if (err) {
@@ -49,7 +50,10 @@ export function deleteLane(req, res) {
 export function updateLane(req, res) {
   try {
     Lane.updateOne({id: req.params.id}, req.body).exec()
-      .then(updateLane => res.json(updateLane))
+
+    Lane.findOne({id: req.params.id}).exec()
+      .then(lane => res.json({lane}))
+
   } catch (err) {
     res.status(500).send(err)
   }

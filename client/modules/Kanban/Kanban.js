@@ -4,7 +4,7 @@ import Lanes from '../Lane/Lanes';
 import styles from './Kanban.css';
 import { bindActionCreators } from "redux";
 
-import { createLane } from '../Lane/LaneActions';
+import { createLaneRequest, fetchLanes } from '../Lane/LaneActions';
 
 let DevTools;
 if (process.env.NODE_ENV === 'development') {
@@ -18,6 +18,10 @@ class Kanban extends Component {
     this.state = { isMounted: true };
   }
 
+  componentDidMount() {
+    this.props.dispatch(fetchLanes());
+  }
+
   render() {
     const { lanes } = this.props;
     console.log(this.props, process.env.NODE_ENV)
@@ -27,7 +31,7 @@ class Kanban extends Component {
     
         <button 
           className={styles.AddLane}
-          onClick={() => this.props.dispatch(createLane({
+          onClick={() => this.props.dispatch(createLaneRequest({
             name: 'New Lane'
           }))}
         >Add lane</button>

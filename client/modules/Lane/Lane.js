@@ -5,7 +5,7 @@ import styles from './Lane.css';
 
 import Edit from '../../components/Edit';
 import Notes from '../Note/Notes';
-import { updateLane, deleteLane } from './LaneActions';
+import { updateLaneRequest, deleteLane } from './LaneActions';
 import { createNote } from '../Note/NoteActions';
 class Lane extends Component {
   render() {
@@ -23,7 +23,7 @@ class Lane extends Component {
 
         <div
           className={styles.LaneHeader}
-          onClick={() => this.props.dispatch(updateLane({ id: laneId, editing: true }))}
+          onClick={() => this.props.dispatch(updateLaneRequest({ id: laneId, editing: true }))}
         >
         <div>
          
@@ -32,7 +32,7 @@ class Lane extends Component {
             className={styles.LaneName}
             editing={lane.editing}
             value={lane.name}
-            onEdit={name => this.props.dispatch(updateLane({id: laneId, name, editing: false}))}
+            onEdit={name => this.props.dispatch(updateLaneRequest({id: laneId, name, editing: false}))}
           />
         </div>
 
