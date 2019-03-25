@@ -24,7 +24,7 @@ class Kanban extends Component {
 
   render() {
     const { lanes } = this.props;
-    console.log(this.props, process.env.NODE_ENV)
+
     return (
       <div className={styles.container}>
         {this.state.isMounted && process.env.NODE_ENV === 'development' && <DevTools />}

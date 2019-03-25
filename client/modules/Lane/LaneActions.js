@@ -54,8 +54,12 @@ export function updateLaneRequest(updatedLane) {
 export function deleteLane(id) {
     return {
         type: DELETE_LANE,
-        ...id
+        id
     }
 }
 
-
+export function deleteLaneRequest(cuid) {
+  return (dispatch) => {
+    return callApi(`lanes/${cuid}`, 'delete').then(() => dispatch(deleteLane(cuid)));
+  };
+}

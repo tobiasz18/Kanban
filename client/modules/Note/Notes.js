@@ -4,7 +4,7 @@ import Note from './Note';
 import Edit from '../../components/Edit';
 
 const Notes = ({ notes }) => {
-  console.log(notes)
+
   return (
     <ul className="notes">
       {notes.map((note) => 

@@ -1,13 +1,22 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styles from './Edit.css'
+import {fetchLanes} from '../modules/Lane/LaneActions';
 export default class Edit extends Component {
+
+  constructor(props) {
+    super(props)
+    this.state = {
+      editing: true
+    }
+  }
+
   render() {
     const {editing, ...props} = this.props;
-    console.log(this.props, 'EDITING')
+    console.log(this.state, 'EDITING')
     return (
       <div {...props}>
-        {editing ? this.renderEdit() : this.renderValue()}
+        {editing? this.renderEdit() : this.renderValue()}
       </div>
     );
   }
@@ -40,6 +49,7 @@ export default class Edit extends Component {
   checkEnter = (e) => { //5
     if(e.key === 'Enter') {
       this.finishEdit(e);
+      this.setState({editing: false})
     }
   };
 
@@ -49,6 +59,8 @@ export default class Edit extends Component {
     if(this.props.onEdit) {
       this.props.onEdit(value.trim());
     }
+
+    
   };
 }
 
