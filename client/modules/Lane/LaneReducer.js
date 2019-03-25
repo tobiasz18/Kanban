@@ -18,7 +18,8 @@ const LaneReducer = (state = initialState, action) => {
       })
 
     case DELETE_LANE:
-      return state.fiter((lane) => lane.id !== action.id)  
+      return state.filter((lane) => lane.id !== action.id)  
+
     default:
       return state;
   }

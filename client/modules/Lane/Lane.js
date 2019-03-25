@@ -2,32 +2,45 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 // Import Style
 import styles from './Lane.css';
+
 import Edit from '../../components/Edit';
+import Notes from '../Note/Notes';
+import { updateLane, deleteLane } from './LaneActions';
+import { createNote } from '../Note/NoteActions';
 class Lane extends Component {
   render() {
-    const { lane, laneNotes, ...props } = this.props;
+    const { lane,  laneNotes,  ...props } = this.props;
     const laneId = lane.id
-
+    console.log(this.props, 'lane')
     return (
       <div {...props}>
+
+       <div>
+          <button onClick={() => this.props.dispatch(createNote({name: 'New Note', id: laneId}))}>
+            add Note
+          </button>
+        </div>
+
         <div
           className={styles.LaneHeader}
-          onClick={() => props.updateLane({ id: laneId, editing: true })}
+          onClick={() => this.props.dispatch(updateLane({ id: laneId, editing: true }))}
         >
-          <div>
-            <button onClick={props.addNote.bind(this. laneId)}>+</button>
-          </div>
+        <div>
+         
+        </div>
           <Edit 
             className={styles.LaneName}
             editing={lane.editing}
             value={lane.name}
-            onEdit={name => props.updateLane({id: laneId, name, editing: false})}
+            onEdit={name => this.props.dispatch(updateLane({id: laneId, name, editing: false}))}
           />
-          <div className={styleMedia.LaneDelete}>
-            <button onClick={this.props.LaneDelete.bind(this, lane)}>x</button>
-          </div>
         </div>
-        <NotesContainer 
+
+        <div className={styleMedia.LaneDelete}>
+          <button onClick={() => this.props.dispatch(deleteLane({id: laneId}))}>Del Lane</button>
+        </div>
+
+        <Notes 
           notes={laneNotes}
         />
       </div>

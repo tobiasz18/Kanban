@@ -8,8 +8,8 @@ const Note = props =>
     {props.children}
   </li>;
 
-  Note.propTypes = {
-    children: PropTypes.any
-  };
+Note.propTypes = {
+  children: PropTypes.any
+};
 
-  export default Note;
+export default Note;

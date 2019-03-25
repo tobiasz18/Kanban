@@ -4,7 +4,7 @@ import styles from './Edit.css'
 export default class Edit extends Component {
   render() {
     const {editing, ...props} = this.props;
-
+    console.log(this.props, 'EDITING')
     return (
       <div {...props}>
         {editing ? this.renderEdit() : this.renderValue()}
