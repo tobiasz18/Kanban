@@ -6,7 +6,7 @@ import styles from './Lane.css';
 import Edit from '../../components/Edit';
 import Notes from '../Note/Notes';
 import { updateLaneRequest, deleteLaneRequest, fetchLanes } from './LaneActions';
-import { createNote } from '../Note/NoteActions';
+import { createNoteRequest, fetchNotes } from '../Note/NoteActions';
 class Lane extends Component {
 
   constructor(props) {
@@ -15,13 +15,20 @@ class Lane extends Component {
       editing: false
     }
   }
+
   componentDidMount() {
     this.props.dispatch(fetchLanes());
+   // this.props.dispatch(fetchNotes(this.props.lane.id))
   }
 
-  update() {
+  updateLane() {
     this.props.dispatch(fetchLanes());
     this.setState({editing: false})
+  }
+
+  updateNote() {
+    this.props.dispatch(fetchNotes(this.props.lane.id))
+    console.log('note update')
   }
 
   render() {
@@ -31,7 +38,11 @@ class Lane extends Component {
     return (
       <div {...props}>
        <div>
-          <button onClick={() => this.props.dispatch(createNote({name: 'New Note', id: laneId}))}>
+          <button onClick={() => {
+              this.props.dispatch(createNoteRequest({name: 'New Note', id: laneId})),
+              this.props.dispatch(fetchLanes());
+            }  
+          }>
             add Note
           </button>
         </div>
@@ -50,7 +61,7 @@ class Lane extends Component {
             value={lane.name}
             onEdit={name => {
               this.props.dispatch(updateLaneRequest({id: laneId, name, editing: false})),
-              this.update() 
+              this.updateLane() 
             }}
           />
         </div>
@@ -59,6 +70,7 @@ class Lane extends Component {
         </div>
         <Notes 
           notes={laneNotes}
+          laneId={laneId}
         />
       </div>
     );

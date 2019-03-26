@@ -47,7 +47,7 @@ const mapStateToProps = state => ({
 
 
 
-const mapDispatchToProps = dispatch => ({ ...bindActionCreators({createLane}, dispatch) })
+//const mapDispatchToProps = dispatch => ({ ...bindActionCreators({createLane}, dispatch) })
 
 
 

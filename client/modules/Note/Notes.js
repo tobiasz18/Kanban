@@ -1,10 +1,14 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Note from './Note';
 import Edit from '../../components/Edit';
+import { deleteNoteRequest, updateNoteRequest } from './NoteActions';
+import { fetchLanes } from '../Lane/LaneActions';
 
-const Notes = ({ notes }) => {
 
+const Notes = ({ notes,laneId, dispatch }) => {
+  console.log(notes, 'asdsa')
   return (
     <ul className="notes">
       {notes.map((note) => 
@@ -15,10 +19,20 @@ const Notes = ({ notes }) => {
         >
         <Edit 
           editing={note.editing}
-          value={note.task}
-          onValueClick={() => onValueClick(note.id)}
-          onEdit={() => onEdit(note.id)}
-          onDelete={() => onDelete(note.id)}
+          value={note.name}
+          onValueClick={() => {
+            dispatch(updateNoteRequest(laneId, note.id, {editing: true})),
+            dispatch(fetchLanes())
+          }}
+          onEdit={(updateNote) => {
+            dispatch(updateNoteRequest(laneId, note.id, updateNote)),
+            dispatch(fetchLanes())
+          }}
+          onDelete={() =>{
+            dispatch(deleteNoteRequest(laneId, note.id)),
+            dispatch(fetchLanes())
+            console.log('delete request')
+          } }
         />
         </Note>
       )}
@@ -30,4 +44,5 @@ Notes.propTypes = {
   notes: PropTypes.array
 };
 
-export default Notes;
+
+export default connect(null)(Notes)

@@ -1,19 +1,19 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styles from './Edit.css'
-import {fetchLanes} from '../modules/Lane/LaneActions';
+//import {fetchLanes} from '../modules/Lane/LaneActions';
 export default class Edit extends Component {
 
   constructor(props) {
     super(props)
     this.state = {
-      editing: true
+      editing: false
     }
   }
 
   render() {
     const {editing, ...props} = this.props;
-    console.log(this.state, 'EDITING')
+    console.log(editing, 'EDITING')
     return (
       <div {...props}>
         {editing? this.renderEdit() : this.renderValue()}
@@ -33,34 +33,32 @@ export default class Edit extends Component {
 
   renderValue = () => { //1
     const { value, onDelete, onValueClick } = this.props;
-
+    console.log(this.props, 'edit')
     return (
-      <div onClick={onValueClick}>
-        <span className={styles.value}>{value}</span>
+      <div>
+        <span onClick={onValueClick} className={styles.value}>{value}</span>
         {onDelete ? this.renderDelete() : null}
       </div>
     );
   };
 
-  renderDelete = (e) => {//2
+  renderDelete = () => {//2
     return <button className={styles.delete} onClick={this.props.onDelete}>x</button>
   };
 
   checkEnter = (e) => { //5
     if(e.key === 'Enter') {
       this.finishEdit(e);
-      this.setState({editing: false})
+     // this.setState({editing: false})
     }
   };
 
   finishEdit = (e) => {//4
-    const value = e.target.value;
+    const value = e.target.value.trim();
     
     if(this.props.onEdit) {
-      this.props.onEdit(value.trim());
-    }
-
-    
+      this.props.onEdit({name: value, editing: false});
+    }   
   };
 }
 

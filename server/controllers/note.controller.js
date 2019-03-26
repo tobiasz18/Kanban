@@ -10,6 +10,7 @@ export function addNote(req, res) {
   const newNote = new Note(req.body)
 
   newNote.id = uuid();
+  newNote.editing = false;
   newNote.save((err, saved) => {
     if(err) {
       res.status(500).send(err);
@@ -38,7 +39,8 @@ export function deleteNote(req, res) {
 export function updateNote(req, res) {
   try {
     Note.updateOne({id: req.params.id}, req.body).exec()
-      .then(note => res.json(note))
+      //.then(note => res.json(note))
+    Note.findOne({id: req.params.id}).exec().then(note => res.json(note))  
   } catch (err) {
     res.send(500).send(err)
   }
