@@ -12,13 +12,8 @@ const LaneReducer = (state = initialState, action) => {
     case CREATE_LANES:
       return [...action.lanes]
 
-    case UPDATE_LANE:
-      return state.map((lane) => {
-        if(lane.id === action.id) {
-          return Object.assign({}, lane, action.updatedLane)
-        }
-        return lane;
-      })
+    case UPDATE_LANE: 
+      return state.map((lane) => lane.id === action.id ? [...lane, action.updatedLane] : lane)  
 
     case DELETE_LANE:
       return state.filter((lane) => lane.id !== action.id)  

@@ -1,5 +1,6 @@
 import uuid from 'uuid';
 import callApi from '../../util/apiCaller';
+import { fetchLanes } from '../Lane/LaneActions';
  
 // Export Constants
 export const CREATE_NOTE = 'CREATE_NOTE';
@@ -18,7 +19,10 @@ export function createNote(note) {
 export function createNoteRequest(note) {
   return (dispatch) => {
     return callApi(`lanes/${note.id}/notes`, 'post', {name: note.name})
-      .then(res => dispatch(createNote(res)))
+      .then(res => {
+        dispatch(createNote(res))
+        dispatch(fetchLanes())
+      })
   }
 } 
 
@@ -43,10 +47,13 @@ export function updateNote(updatedNote) {
     }
 }
 
-export function updateNoteRequest(laneId, noteId, updateNote) {
+export function updateNoteRequest(laneId, noteId, updatedNote) {
   return (dispatch) => {
-    return callApi(`lanes/${laneId}/notes/${noteId}`, 'put', updateNote)
-      .then(res => dispatch(updateNote(res)))
+    return callApi(`lanes/${laneId}/notes/${noteId}`, 'put', updatedNote)
+      .then(res => {
+        dispatch(updateNote(res))
+        dispatch(fetchLanes())
+      })
   }
 }
 
@@ -60,6 +67,9 @@ export function deleteNote(noteId) {
 export function deleteNoteRequest(laneId, noteId) {
   return (dispatch) => {
     return callApi(`lanes/${laneId}/notes/${noteId}`, 'delete')
-      .then(() => dispatch(deleteNote(noteId)))
+      .then(() => {
+        dispatch(deleteNote(noteId))
+        dispatch(fetchLanes())
+      })
   }
 }

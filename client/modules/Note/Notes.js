@@ -8,7 +8,6 @@ import { fetchLanes } from '../Lane/LaneActions';
 
 
 const Notes = ({ notes,laneId, dispatch }) => {
-  console.log(notes, 'asdsa')
   return (
     <ul className="notes">
       {notes.map((note) => 
@@ -21,18 +20,14 @@ const Notes = ({ notes,laneId, dispatch }) => {
           editing={note.editing}
           value={note.name}
           onValueClick={() => {
-            dispatch(updateNoteRequest(laneId, note.id, {editing: true})),
-            dispatch(fetchLanes())
+            dispatch(updateNoteRequest(laneId, note.id, {editing: true}))
           }}
           onEdit={(updateNote) => {
-            dispatch(updateNoteRequest(laneId, note.id, updateNote)),
-            dispatch(fetchLanes())
+            dispatch(updateNoteRequest(laneId, note.id, updateNote))
           }}
           onDelete={() =>{
-            dispatch(deleteNoteRequest(laneId, note.id)),
-            dispatch(fetchLanes())
-            console.log('delete request')
-          } }
+            dispatch(deleteNoteRequest(laneId, note.id))
+          }}
         />
         </Note>
       )}

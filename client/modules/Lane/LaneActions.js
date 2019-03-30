@@ -1,4 +1,4 @@
-import uuid from 'uuid';
+
 import callApi from '../../util/apiCaller';
 
 // Export Constants
@@ -47,7 +47,10 @@ export function updateLane(updatedLane) {
 export function updateLaneRequest(updatedLane) {
   return (dispatch) => {
     return callApi(`lanes/${updatedLane.id}`, 'put', updatedLane)
-      .then(res => dispatch(updateLane(res.lane)))
+      .then(res => {
+        dispatch(updateLane(...res))
+        dispatch(fetchLanes())
+      })
   }
 }
 

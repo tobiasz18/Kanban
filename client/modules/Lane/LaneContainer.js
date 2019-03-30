@@ -4,8 +4,7 @@ import Lane from './Lane';
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    laneNotes: ownProps.lane.notes,
-    lanetest: state
+    laneNotes: ownProps.lane.notes
   };
 };
 

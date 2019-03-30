@@ -13,7 +13,7 @@ export default class Edit extends Component {
 
   render() {
     const {editing, ...props} = this.props;
-    console.log(editing, 'EDITING')
+    console.log(editing)
     return (
       <div {...props}>
         {editing? this.renderEdit() : this.renderValue()}
@@ -21,7 +21,7 @@ export default class Edit extends Component {
     );
   }
 
-  renderEdit = () => {//3
+  renderEdit = () => {
     return <input 
               type="text"
               autoFocus={true}
@@ -31,9 +31,8 @@ export default class Edit extends Component {
             />;
   };
 
-  renderValue = () => { //1
+  renderValue = () => { 
     const { value, onDelete, onValueClick } = this.props;
-    console.log(this.props, 'edit')
     return (
       <div>
         <span onClick={onValueClick} className={styles.value}>{value}</span>
@@ -42,20 +41,19 @@ export default class Edit extends Component {
     );
   };
 
-  renderDelete = () => {//2
+  renderDelete = () => {
     return <button className={styles.delete} onClick={this.props.onDelete}>x</button>
   };
 
-  checkEnter = (e) => { //5
+  checkEnter = (e) => { 
     if(e.key === 'Enter') {
       this.finishEdit(e);
-     // this.setState({editing: false})
     }
   };
 
-  finishEdit = (e) => {//4
+  finishEdit = (e) => {
     const value = e.target.value.trim();
-    
+ 
     if(this.props.onEdit) {
       this.props.onEdit({name: value, editing: false});
     }   
@@ -66,6 +64,6 @@ Edit.propTypes = {
   value: PropTypes.string,
   onEdit: PropTypes.func,
   onValueClick: PropTypes.func,
-  editing: PropTypes.bool
+  editing: PropTypes.boolean
 };
 

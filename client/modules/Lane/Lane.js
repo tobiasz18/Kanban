@@ -9,38 +9,14 @@ import { updateLaneRequest, deleteLaneRequest, fetchLanes } from './LaneActions'
 import { createNoteRequest, fetchNotes } from '../Note/NoteActions';
 class Lane extends Component {
 
-  constructor(props) {
-    super(props)
-    this.state = {
-      editing: false
-    }
-  }
-
-  componentDidMount() {
-    this.props.dispatch(fetchLanes());
-   // this.props.dispatch(fetchNotes(this.props.lane.id))
-  }
-
-  updateLane() {
-    this.props.dispatch(fetchLanes());
-    this.setState({editing: false})
-  }
-
-  updateNote() {
-    this.props.dispatch(fetchNotes(this.props.lane.id))
-    console.log('note update')
-  }
-
   render() {
-    const { lane,  laneNotes,  ...props } = this.props;
+    const { lane,  laneNotes, ...props } = this.props;
     const laneId = lane.id
-  
     return (
       <div {...props}>
        <div>
           <button onClick={() => {
-              this.props.dispatch(createNoteRequest({name: 'New Note', id: laneId})),
-              this.props.dispatch(fetchLanes());
+              this.props.dispatch(createNoteRequest({name: 'New Note', id: laneId}))     
             }  
           }>
             add Note
@@ -50,18 +26,16 @@ class Lane extends Component {
           className={styles.LaneHeader}
           onClick={() => {
             this.props.dispatch(updateLaneRequest({ id: laneId, editing: true }),
-            this.setState({editing: true})
             )}}
         >
         <div>     
         </div>
           <Edit 
             className={styles.LaneName}
-            editing={this.state.editing}
+            editing={lane.editing}
             value={lane.name}
-            onEdit={name => {
-              this.props.dispatch(updateLaneRequest({id: laneId, name, editing: false})),
-              this.updateLane() 
+            onEdit={bodyToChange => {
+              this.props.dispatch(updateLaneRequest({id: laneId, ...bodyToChange}))  
             }}
           />
         </div>
