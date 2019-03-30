@@ -13,7 +13,7 @@ export default class Edit extends Component {
 
   render() {
     const {editing, ...props} = this.props;
-    console.log(editing)
+
     return (
       <div {...props}>
         {editing? this.renderEdit() : this.renderValue()}
