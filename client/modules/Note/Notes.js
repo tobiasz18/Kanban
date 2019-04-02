@@ -6,10 +6,11 @@ import Edit from '../../components/Edit';
 import { deleteNoteRequest, updateNoteRequest } from './NoteActions';
 import { fetchLanes } from '../Lane/LaneActions';
 
+import styles from './Note.css';
 
 const Notes = ({ notes,laneId, dispatch }) => {
   return (
-    <ul className="notes">
+    <ul className={styles.notes}>
       {notes.map((note) => 
         <Note 
           id={note.id} 

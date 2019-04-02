@@ -4,7 +4,7 @@ import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
 import path from 'path';
 import IntlWrapper from '../client/modules/Intl/IntlWrapper';
-
+import Kanban from '../client/modules/Kanban/Kanban';
 // Initialize the Express App
 const app = new Express();
 
@@ -49,7 +49,6 @@ import { fetchComponentData } from './util/fetchData';
 import lanes from './routes/lane.routes';
 import dummyData from './dummyData';
 import serverConfig from './config';
-
 // Set native promises as mongoose promise
 mongoose.Promise = global.Promise;
 
@@ -90,10 +89,10 @@ const renderFullPage = (html, initialState) => {
         ${head.meta.toString()}
         ${head.link.toString()}
         ${head.script.toString()}
-
+        
         ${isProdMode ? `<link rel='stylesheet' href='${assetsManifest['/app.css']}' />` : ''}
         <link href='https://fonts.googleapis.com/css?family=Lato:400,300,700' rel='stylesheet' type='text/css'/>
-        <link rel="shortcut icon" href="http://res.cloudinary.com/hashnode/image/upload/v1455629445/static_imgs/mern/mern-favicon-circle-fill.png" type="image/png" />
+        <link rel="shortcut icon" href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT6xCMc6FKL4bdQS2YQxfXFQ6galIgq1r2bpEz4mZBnBpOUvuED" type="image/png" />
       </head>
       <body>
         <div id="root">${process.env.NODE_ENV === 'production' ? html : `<div>${html}</div>`}</div>
@@ -139,9 +138,8 @@ app.use((req, res, next) => {
       .then(() => {
         const initialView = renderToString(
           <Provider store={store}>
-            <IntlWrapper>
-              <RouterContext {...renderProps} />
-            </IntlWrapper>
+            <Kanban />
+             
           </Provider>
         );
         const finalState = store.getState();

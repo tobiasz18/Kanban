@@ -1,6 +1,13 @@
 /* Lane styles */
 .LaneHeader {
-
+  display: flex;
+  justify-content: space-around;
+  min-width: 120px;
+  background: blue;
+  color: white;
+  min-width: 230px;
+  padding: 15px 0;
+  font-weight: 600;
 }
 
 .LaneName {
@@ -11,10 +18,60 @@
 
 }
 
+.AddNote {
+  padding: 30px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+}
+
 .lanes  {
   display: flex;
+  height: 100%;
+  min-height: 600px;
+}
+
+.lanes .lane:nth-child(2), 
+.lanes .lane:nth-child(4),  
+.lanes .lane:nth-child(6) {
+  background: rgba(211, 221, 223, 0.9);
 }
 
 .lane {
+  background: rgba(225, 228, 233, 0.91);
+}
 
+div.ex2 {
+  height: 30px;
+  width: 30px;
+  border-radius: 5px;
+  position: relative;
+}
+
+div.ex2:after {
+  content: '\D7';
+  color: white;
+  position: absolute;
+  top: -10px;
+  left: 30px;
+  font-size: 21px;
+  cursor: pointer;
+}
+
+.cross { 
+  background: #9a9a9a;
+  height: 20px;
+  position: relative;
+
+  width: 1px; 
+} 
+
+.cross:after { 
+  background: #9a9a9a;
+  content: "";
+  height: 1px;
+  left: -9.5px;
+  position: absolute;
+  top: 10px;
+  width: 20px;
 }

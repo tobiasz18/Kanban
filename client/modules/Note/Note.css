@@ -1,9 +1,11 @@
 /* Note styles */
 .Note {
 
+  list-style-type: none;
+
 }
 
 .notes {
-  
+ 
 }
 

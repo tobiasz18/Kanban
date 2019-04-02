@@ -2,17 +2,23 @@ import Lane from '../models/lane';
 import uuid from 'uuid/v4';
 import Note from '../models/note'
 
+function randomColor() {
+  const colors = ['#F98C00', '#363D9C', '#2D7D31', '#2395F3','rgb(233, 20, 117)', 'rgb(18, 166, 254)', 'rgb(248, 22, 55)']
+  const ramdoColor = colors[Math.floor(Math.random() * 8)] 
+  return ramdoColor
+}
+
 export function addLane(req, res) {
   if (!req.body.name) {
     res.status(403).end();
   }   
-
+ 
   const newLane = new Lane(req.body);
 
   newLane.notes = [];
   newLane.id = uuid();
   newLane.editing = false;
-
+  newLane.color = randomColor();
   newLane.save((err, saved) => {
     if (err) {
       res.status(500).send(err);
