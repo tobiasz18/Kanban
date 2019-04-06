@@ -14,7 +14,11 @@ if (process.env.NODE_ENV === 'development') {
 class Kanban extends Component {
   constructor(props) {
     super(props);
-    this.state = { isMounted: false, show: true };
+    this.state = { 
+      isMounted: true, 
+      show: true // show add lane button or input add lane
+    };
+   
   }
 
   componentDidMount() {
@@ -36,6 +40,7 @@ class Kanban extends Component {
   }
 
   changeStateToFalse() {
+    if(this.props.lanes.length >= 5) alert('The maximum number of columns is 5')
     this.setState({show: false})
   }
 
@@ -59,7 +64,7 @@ class Kanban extends Component {
             },
           ]}
         />
-        {this.state.isMounted && process.env.NODE_ENV === 'development' && <DevTools />}    
+        {this.state.isMounted && process.env.NODE_ENV === 'development' && <DevTools />}   
         {
           this.state.show ?  // Render Input or Add lane title 
             <div className={styles.addLaneContainer} onClick={() => this.changeStateToFalse()}>
@@ -69,20 +74,23 @@ class Kanban extends Component {
             :  
             <input 
               className={styles.input} 
-              type="text" placeholder="Add Column" 
+              type="text" 
+              placeholder="Add lane" 
               autoFocus={true} 
               onBlur={() => this.finishChanging()}  
               onKeyPress={(e) => this.handleChange(e)}
             />
         }     
-       <Lanes lanes={lanes} />
+        <Lanes lanes={lanes} />
       </div>
     );
   }  
 }
 
+//Lanes.need = [() => { return fetchLanes(); }];
+
 const mapStateToProps = state => ({
-  lanes: state.lane
+  lanes: Object.values(state.lane)
 });
 
 

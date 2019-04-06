@@ -3,6 +3,7 @@ import LaneContainer from './LaneContainer';
 import PropTypes from 'prop-types';
 import styles from './Lane.css';
 
+
 const Lanes = ({ lanes }) => {
   return (
     <div className={styles.lanes}>
@@ -15,8 +16,12 @@ const Lanes = ({ lanes }) => {
   );  
 };
 
+
+
+
 Lanes.propTypes = {
   name: PropTypes.array
 };
+
 
 export default Lanes;

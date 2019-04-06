@@ -35,10 +35,10 @@ const Notes = ({ notes,laneId, dispatch }) => {
     </ul>
   );
 };
-
+/*
 Notes.propTypes = {
   notes: PropTypes.array
 };
-
+*/
 
 export default connect(null)(Notes)

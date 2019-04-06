@@ -3,5 +3,12 @@
 }
 
 .delete {
+  border: none;
+  background: none;
+  float: right;
+  cursor: pointer;
+}
 
+.NoteValue {
+  
 }

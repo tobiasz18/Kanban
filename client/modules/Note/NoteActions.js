@@ -26,7 +26,7 @@ export function createNoteRequest(note) {
   }
 } 
 
-export function getNotes(notes) {
+export function createNotes(notes) {
   return {
     type: CREATE_NOTES,
     notes
@@ -40,10 +40,10 @@ export function fetchNotes(laneId) {
   }
 }
 
-export function updateNote(updatedNote) {
+export function updateNote(note) {
     return {
         type: UPDATE_NOTE,
-        ...updatedNote
+        note
     }
 }
 

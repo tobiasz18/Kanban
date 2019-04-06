@@ -1,8 +1,12 @@
 /* Note styles */
 .Note {
-
   list-style-type: none;
-
+  background: #efefef;
+  margin: 20px;
+  border-radius: 5px;
+  padding: 10px;
+  text-align: left;
+  font-size: 14px;
 }
 
 .notes {

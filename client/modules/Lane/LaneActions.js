@@ -7,6 +7,10 @@ export const UPDATE_LANE = 'UPDATE_LANE';
 export const DELETE_LANE = 'DELETE_LANE';
 export const CREATE_LANES = 'CREATE_LANES';
 
+import { normalize, schema } from 'normalizr';
+import { lanesSchema } from '../../util/schema'
+import { createNotes } from '../Note/NoteActions';
+
 // Export Actions
 export function createLane(lane) {
     return {
@@ -32,23 +36,26 @@ export function createLanes(lanes) {
 export function fetchLanes() {
   return (dispatch) => {
     return callApi('lanes').then(res => {
-      dispatch(createLanes(res.lanes))
+      const normalizedData = normalize(res.lanes, lanesSchema);
+      const {lanes, notes} = normalizedData.entities;
+      dispatch(createLanes(lanes))
+      dispatch(createNotes(notes))
     })
   }
 }
 
-export function updateLane(updatedLane) {
+export function updateLane(lane) {
     return {
         type: UPDATE_LANE,
-        updatedLane
+        lane
     };
 };
 
-export function updateLaneRequest(updatedLane) {
+export function updateLaneRequest(laneObject) {
   return (dispatch) => {
-    return callApi(`lanes/${updatedLane.id}`, 'put', updatedLane)
+    return callApi(`lanes/${laneObject.id}`, 'put', laneObject)
       .then(res => {
-        dispatch(updateLane(...res))
+        dispatch(updateLane(res.lane))
         dispatch(fetchLanes())
       })
   }

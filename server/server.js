@@ -138,8 +138,9 @@ app.use((req, res, next) => {
       .then(() => {
         const initialView = renderToString(
           <Provider store={store}>
-            <Kanban />
-             
+            <IntlWrapper>
+              <RouterContext {...renderProps} />
+            </IntlWrapper>      
           </Provider>
         );
         const finalState = store.getState();

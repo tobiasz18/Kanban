@@ -39,6 +39,7 @@
 
 .lane {
   background: rgba(225, 228, 233, 0.91);
+  max-width: 300px;
 }
 
 div.ex2 {

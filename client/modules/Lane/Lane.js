@@ -4,17 +4,27 @@ import PropTypes from 'prop-types';
 import styles from './Lane.css';
 
 import Edit from '../../components/Edit';
-import Notes from '../Note/Notes';
+import NotesContainer from '../Note/NotesContainer';
 import { updateLaneRequest, deleteLaneRequest, fetchLanes } from './LaneActions';
 import { createNoteRequest, fetchNotes } from '../Note/NoteActions';
 
 class Lane extends Component {
 
   render() {
-    const { lane,  laneNotes, ...props } = this.props;
+    const { lane, notes,  laneNotes, ...props } = this.props;
     const laneId = lane.id;
- 
     const ramdoColor = {background: lane.color}
+
+    const noteList = []
+
+    notes.map((note) => {
+      laneNotes.map((laneNote) => {
+        if(note.id === laneNote) {
+          noteList.push(note)
+        }
+      })
+    })
+
     return (
       <div {...props} className={styles.lane}>
         <div
@@ -42,8 +52,8 @@ class Lane extends Component {
         <div className={styles.cross}></div> 
         </div>
       
-        <Notes  
-          notes={laneNotes}
+        <NotesContainer  
+          notes={noteList}
           laneId={laneId}
         />
       </div>
