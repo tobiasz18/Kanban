@@ -1,5 +1,6 @@
 // Import Actions
 import { CREATE_NOTE, UPDATE_NOTE, DELETE_NOTE, CREATE_NOTES } from './NoteActions';
+import {  ATTACH_TO_LANE } from '../DndActions/actions';
 
 import _ from 'lodash';
 
@@ -21,6 +22,9 @@ const NoteReducer = (state = initialState, action) => {
     case DELETE_NOTE:
       return _.omit(state, action.id);
     //  return state.filter(note => note.noteId !== action.noteId)
+
+    case ATTACH_TO_LANE:
+    return {...state, [action.note.id] : action.note}
       
     default:
       return state;

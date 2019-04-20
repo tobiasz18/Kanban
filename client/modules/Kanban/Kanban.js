@@ -1,10 +1,16 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import Lanes from '../Lane/Lanes';
 import styles from './Kanban.css';
 import Helmet from 'react-helmet';
 
 import { createLaneRequest, fetchLanes } from '../Lane/LaneActions';
+import { compose } from 'redux';
+
+import { connect } from 'react-redux'
+
+import HTML5Backend from 'react-dnd-html5-backend'
+import { DragDropContext } from 'react-dnd'
+
 
 let DevTools;
 if (process.env.NODE_ENV === 'development') {
@@ -15,10 +21,9 @@ class Kanban extends Component {
   constructor(props) {
     super(props);
     this.state = { 
-      isMounted: true, 
+      isMounted: false, 
       show: true // show add lane button or input add lane
     };
-   
   }
 
   componentDidMount() {
@@ -79,7 +84,7 @@ class Kanban extends Component {
               autoFocus={true} 
               onBlur={() => this.finishChanging()}  
               onKeyPress={(e) => this.handleChange(e)}
-            />
+             />
         }     
         <Lanes lanes={lanes} />
       </div>
@@ -93,5 +98,10 @@ const mapStateToProps = state => ({
   lanes: Object.values(state.lane)
 });
 
+export default compose(
+  connect(mapStateToProps),
+  DragDropContext(HTML5Backend)
+)(Kanban)
 
-export default connect(mapStateToProps)(Kanban);
+
+

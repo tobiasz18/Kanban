@@ -1,4 +1,3 @@
-import uuid from 'uuid';
 import callApi from '../../util/apiCaller';
 import { fetchLanes } from '../Lane/LaneActions';
  
@@ -30,13 +29,6 @@ export function createNotes(notes) {
   return {
     type: CREATE_NOTES,
     notes
-  }
-}
-
-export function fetchNotes(laneId) {
-  return (dispatch) => {
-    return callApi(`lanes/${laneId}/notes`)
-      .then(res => dispatch(getNotes(res)))
   }
 }
 

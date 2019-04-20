@@ -20,6 +20,7 @@ if (process.env.NODE_ENV !== 'production') {
   /*require('./modules/Post/pages/PostListPage/PostListPage');
   require('./modules/Post/pages/PostDetailPage/PostDetailPage');*/
   require('./modules/Kanban/Kanban');
+  require('./modules/Lane/Lanes');
 }
 
 // react-router setup with code-splitting
@@ -29,7 +30,7 @@ export default (
     <IndexRoute
       getComponent={(nextState, cb) => {
         require.ensure([], require => {
-          cb(null, require('./modules/Lane/LaneContainer').default);
+          cb(null, require('./modules/Lane/Lanes').default);
         });
       }}
     />

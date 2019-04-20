@@ -5,13 +5,19 @@ import styles from './Lane.css';
 
 import Edit from '../../components/Edit';
 import NotesContainer from '../Note/NotesContainer';
-import { updateLaneRequest, deleteLaneRequest, fetchLanes } from './LaneActions';
-import { createNoteRequest, fetchNotes } from '../Note/NoteActions';
+import { updateLaneRequest, deleteLaneRequest } from './LaneActions';
+import { createNoteRequest, deleteNoteRequest } from '../Note/NoteActions';
+import { connect } from 'react-redux';
 
+import { compose } from 'redux';
+import { DropTarget } from 'react-dnd';
+import ItemTypes from '../Kanban/itemTypes';
+
+import { attachToLaneRequest } from '../DndActions/actions';
 class Lane extends Component {
 
   render() {
-    const { lane, notes,  laneNotes, ...props } = this.props;
+    const { connectDropTarget, lane, notes,  laneNotes, ...props } = this.props;
     const laneId = lane.id;
     const ramdoColor = {background: lane.color}
 
@@ -24,8 +30,8 @@ class Lane extends Component {
         }
       })
     })
-
-    return (
+   // console.log(laneNotes, noteList)
+    return connectDropTarget(
       <div {...props} className={styles.lane}>
         <div
           style={ramdoColor}
@@ -55,6 +61,7 @@ class Lane extends Component {
         <NotesContainer  
           notes={noteList}
           laneId={laneId}
+          currentLane={lane}
         />
       </div>
     );
@@ -66,4 +73,32 @@ Lane.propsTypes = {
   laneNotes: PropTypes.array
 }
 
-export default Lane;
+const mapStateToProps = (state, ownProps) => {
+  return {
+    laneNotes: ownProps.lane.notes,
+    notes: Object.values(state.note)
+  };
+};
+
+const noteTarget = {
+  drop (targetProps, monitor) {
+    const sourceProps = monitor.getItem();
+    const sourceId = sourceProps.id;
+
+    if(targetProps.lane.id !== sourceProps.laneId) {
+      targetProps.dispatch(deleteNoteRequest(targetProps.lane.id, sourceProps.id))
+      targetProps.dispatch(attachToLaneRequest(
+        targetProps.lane.id,
+        sourceProps.name
+      ))  
+    }
+  } 
+}
+
+export default compose(
+  connect(mapStateToProps),
+  DropTarget(ItemTypes.NOTE, noteTarget, (connect) => ({
+    connectDropTarget: connect.dropTarget()
+  }))
+)(Lane)
+

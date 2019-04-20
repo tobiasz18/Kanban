@@ -4,15 +4,17 @@ import PropTypes from 'prop-types';
 import Note from './Note';
 import Edit from '../../components/Edit';
 import { deleteNoteRequest, updateNoteRequest } from './NoteActions';
-import { fetchLanes } from '../Lane/LaneActions';
 
 import styles from './Note.css';
 
-const Notes = ({ notes,laneId, dispatch }) => {
+const Notes = ({ notes,laneId,currentLane, dispatch }) => {
   return (
     <ul className={styles.notes}>
       {notes.map((note) => 
         <Note 
+          laneId= {laneId}
+          allNotes={notes}
+          currentLane={currentLane}
           id={note.id} 
           key={note.id}
           editing={note.editing}
@@ -35,10 +37,10 @@ const Notes = ({ notes,laneId, dispatch }) => {
     </ul>
   );
 };
-/*
+
 Notes.propTypes = {
   notes: PropTypes.array
 };
-*/
+
 
 export default connect(null)(Notes)

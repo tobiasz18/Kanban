@@ -15,10 +15,11 @@ export function addLane(req, res) {
  
   const newLane = new Lane(req.body);
 
-  newLane.notes = [];
+
   newLane.id = uuid();
   newLane.editing = false;
   newLane.color = randomColor();
+
   newLane.save((err, saved) => {
     if (err) {
       res.status(500).send(err);
@@ -64,3 +65,5 @@ export function updateLane(req, res) {
     res.status(500).send(err)
   }
 }
+
+
