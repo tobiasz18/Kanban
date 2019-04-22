@@ -7,9 +7,10 @@ import { deleteNoteRequest, updateNoteRequest } from './NoteActions';
 
 import styles from './Note.css';
 
-const Notes = ({ notes,laneId,currentLane, dispatch }) => {
+const Notes = ({ notes,laneId,currentLane, dispatch , ...props}) => {
+  console.log('laneId', laneId, currentLane)
   return (
-    <ul className={styles.notes}>
+    <ul className={styles.notes}  >
       {notes.map((note) => 
         <Note 
           laneId= {laneId}

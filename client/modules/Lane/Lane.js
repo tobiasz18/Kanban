@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import styles from './Lane.css';
 
 import Edit from '../../components/Edit';
-import NotesContainer from '../Note/NotesContainer';
+import Notes from '../Note/Notes';
 import { updateLaneRequest, deleteLaneRequest } from './LaneActions';
 import { createNoteRequest, deleteNoteRequest } from '../Note/NoteActions';
 import { connect } from 'react-redux';
@@ -22,7 +22,7 @@ class Lane extends Component {
     const ramdoColor = {background: lane.color}
 
     const noteList = []
-
+    console.log('props z lane', lane)
     notes.map((note) => {
       laneNotes.map((laneNote) => {
         if(note.id === laneNote) {
@@ -33,6 +33,7 @@ class Lane extends Component {
    // console.log(laneNotes, noteList)
     return connectDropTarget(
       <div {...props} className={styles.lane}>
+        
         <div
           style={ramdoColor}
           className={styles.LaneHeader}
@@ -42,23 +43,27 @@ class Lane extends Component {
         >
           <Edit 
             className={styles.LaneName}
+            noteList={noteList.length}
             editing={lane.editing}
             value={lane.name}
+            maxLength={89}
+            maxRows={3}
             onEdit={bodyToChange => {
               this.props.dispatch(updateLaneRequest({id: laneId, ...bodyToChange}))  
-            }}
-          />
+            }} 
+          /> 
           <div className={styleMedia.LaneDelete}>
             <div className={styles.ex2} onClick={() => this.props.dispatch(deleteLaneRequest(laneId))}></div>
           </div>       
         </div>
+       
         <div className={styles.AddNote} onClick={() => {
-            this.props.dispatch(createNoteRequest({name: 'New Note', id: laneId}))     
-          }}  >
-        <div className={styles.cross}></div> 
+            this.props.dispatch(createNoteRequest({name: 'Click here and add note', id: laneId}))     
+          }}>
+          <div className={styles.cross}></div> 
         </div>
-      
-        <NotesContainer  
+          
+        <Notes  
           notes={noteList}
           laneId={laneId}
           currentLane={lane}

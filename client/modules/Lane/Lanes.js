@@ -7,7 +7,7 @@ import styles from './Lane.css';
 const Lanes = ({ lanes }) => {
   //console.log('lanes', lanes)
   return (
-    <div className={styles.lanes}>
+    <div className={styles.lanes} >
       {
         lanes.map(lane => 
           <Lane className="lane" key={lane.id} lane={lane} />

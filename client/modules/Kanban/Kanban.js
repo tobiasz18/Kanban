@@ -45,7 +45,7 @@ class Kanban extends Component {
   }
 
   changeStateToFalse() {
-    if(this.props.lanes.length >= 5) alert('The maximum number of columns is 5')
+    if(this.props.lanes.length >= 4) alert('The maximum number of columns is 4')
     this.setState({show: false})
   }
 
@@ -77,10 +77,13 @@ class Kanban extends Component {
               <div className={styles.cross}></div> 
             </div>  
             :  
-            <input 
+            <textarea 
               className={styles.input} 
+              rows="4"
+              cols="35"
+              maxlength="89"
               type="text" 
-              placeholder="Add lane" 
+              placeholder="Name" 
               autoFocus={true} 
               onBlur={() => this.finishChanging()}  
               onKeyPress={(e) => this.handleChange(e)}

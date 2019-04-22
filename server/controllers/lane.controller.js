@@ -3,7 +3,7 @@ import uuid from 'uuid/v4';
 import Note from '../models/note'
 
 function randomColor() {
-  const colors = ['#F98C00', '#363D9C', '#2D7D31', '#2395F3','rgb(233, 20, 117)', 'rgb(18, 166, 254)', 'rgb(248, 22, 55)']
+  const colors = ['#F98C00', '#363D9C', '#2D7D31', '#2395F3','rgb(233, 20, 117)', 'rgb(18, 166, 254)', 'rgb(236, 83, 105)']
   const ramdoColor = colors[Math.floor(Math.random() * 8)] 
   return ramdoColor
 }

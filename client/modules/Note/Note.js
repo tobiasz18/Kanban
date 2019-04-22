@@ -3,21 +3,24 @@ import PropTypes from 'prop-types';
 
 import styles from './Note.css';
 
-import {DragSource, DropTarget } from 'react-dnd';
+import { findDOMNode } from 'react-dom'
+
+import { DragSource, DropTarget } from 'react-dnd';
 import ItemTypes from '../Kanban/itemTypes';
 
-import {compose} from 'redux';
-import { updateLaneRequest } from '../Lane/LaneActions';
+import { compose } from 'redux';
+import { updateLaneRequest, fetchLanes } from '../Lane/LaneActions';
 import { connect } from 'react-redux';
 
 class Note extends React.Component {
-  render() {
-    const {connectDragSource, connectDropTarget, isDragging, onMove, id, editing, ...props} = this.props;
-    const dragSource = editing ? a => a : connectDragSource;
 
+  render() {
+    const { connectDragSource, connectDropTarget, isDragging, onMove, id, editing, ...props } = this.props;
+    const dragSource = editing ? a => a : connectDragSource;
+   // console.log(this.props)
     return dragSource(connectDropTarget( 
       <li style={{
-        opacity: isDragging ? 0 : 1
+        opacity: isDragging ? 0.5 : 1
       }} className={styles.Note} {...props}>{props.children}</li>
     ))
   }
@@ -36,15 +39,15 @@ const noteSource = {
     };
   },
   isDragging(props, monitor) {
-    // props.id === monitor.getItem().id
-    return false
+     
+    return props.id === monitor.getItem().id
   }
 }
 
 const noteTarget = {
-  canDrop (targetProps, monitor) {
+  drop (targetProps, monitor) {
     const sourceProps =  monitor.getItem();
-
+  
     function takeIndex(indeks) {
       let myIndex;
       targetProps.allNotes.forEach((obj, index) => {
@@ -71,6 +74,8 @@ const noteTarget = {
   }
 }
 
+
+
 export default compose(
   connect(null),
   DragSource(ItemTypes.NOTE, noteSource, (connect, monitor) => ({
@@ -78,8 +83,7 @@ export default compose(
     isDragging: monitor.isDragging()
   })),
   DropTarget(ItemTypes.NOTE, noteTarget, (connect) => ({
-    connectDropTarget: connect.dropTarget()
-  })),
-
+    connectDropTarget: connect.dropTarget(),
+  }))
 )(Note)
  

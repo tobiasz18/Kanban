@@ -12,18 +12,26 @@ export default class Edit extends Component {
   }
 
   render() {
-    const {editing, ...props} = this.props;
+    const {editing,noteList, ...props} = this.props;
 
     return (
-      <div {...props}>
+      <div {...props} className = {styles.containerValue}>  {noteList ? `(${noteList})` : ''}
         {editing ? this.renderEdit() : this.renderValue()}
       </div>
     );
   }
 
   renderEdit = () => {
-    return <input 
+    console.log('hellow from edit', this.props);
+    const max = this.props.maxLength ? this.props.maxLength : 570
+    const maxRows = this.props.maxRows ? this.props.maxRows : 12
+    return <textarea  
+              style={{padding: "5px", overflow: 'auto'}}
               type="text"
+              cols="30" 
+              rows={`${maxRows}`}
+              maxLength= {`${max}`}
+              className= {styles.Edit_Inut} 
               autoFocus={true}
               defaultValue={this.props.value}
               onBlur={this.finishEdit}
@@ -35,8 +43,8 @@ export default class Edit extends Component {
     const { value, onDelete, onValueClick } = this.props;
 
     return (
-      <div>
-        <span onClick={onValueClick} className={styles.NoteValue}>{value}</span>
+      <div onClick={onValueClick} style={{paddingBottom: "30px"}}>
+        <span  className={styles.NoteValue}>{value}</span>
         {onDelete ? this.renderDelete() : null }
       </div>
     );
